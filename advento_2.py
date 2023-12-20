@@ -17,7 +17,6 @@ def day_one():
                 last = i
         if last == "":
             last = first
-        print(first + last)
         sum += int(first + last)
         first = ""
         last = ""
@@ -25,4 +24,25 @@ def day_one():
     
     return sum
 
-print(day_one())
+def day_two():
+    file = open("day_2.txt")
+    line = file.readline()
+    sum = 0
+    ZERO = 0
+    dicionario = {"red" : ZERO, "green" : ZERO, "blue" : ZERO}
+    while line:
+        list_game_games = line.split(":")
+        list_game_games[0] = list_game_games[0].replace("Game ", "")
+        list_games = list_game_games[1].split(";")
+        for game in list_games:
+            list_tudo_separadinho = game.replace(",", "").replace("\n", "").split(" ")[1:]
+            for i in range(len(list_tudo_separadinho) - 1):
+                if (list_tudo_separadinho[i + 1] in dicionario.keys()) and (int(dicionario[list_tudo_separadinho[i + 1]]) < int(list_tudo_separadinho[i])):
+                    dicionario[list_tudo_separadinho[i + 1]] = int(list_tudo_separadinho[i])
+        sum += (int(dicionario["red"]) * int(dicionario["blue"]) * int(dicionario["green"]))
+        line = file.readline()
+        for key in dicionario.keys():
+            dicionario[key] = ZERO
+    return sum
+
+print(day_two())
