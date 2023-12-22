@@ -13,4 +13,16 @@ def day_one():
     
     return max_
 
+def day_two():
+    file = open("day_2.txt")
+    line = file.readline()
+    matchups = {"AX":3, "AY":6, "AZ":0, "BX":0, "BY":3, "BZ":6, "CX":6, "CY":0, "CZ":3}
+    values = {"X":1, "Y":2, "Z":3}
+    soma = 0
+    while line:
+        line = line.replace(" ", "").replace("\n", "")
+        soma += matchups[line] + values[line[1]]
+        line = file.readline()
+    return soma
+
 print(day_one())
