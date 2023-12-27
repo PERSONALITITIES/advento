@@ -42,4 +42,62 @@ def day_two():
         line = file.readline()
     return sum
 
-print(day_two())
+def day_three():
+    vetor = [-1, 0, 1]
+    file = open("day_3.txt")
+    previous_line = file.readline()
+    line = file.readline()
+    next_line = file.readline()
+    soma = []
+    soma_mesmo = 0
+    while line:
+        previous_line = previous_line.replace("\n", "")
+        line = line.replace("\n", "")
+        next_line = next_line.replace("\n", "")
+        for i, char in enumerate(line):
+            if char in "*":
+                for v in vetor:
+                    if i + v >= 0 and i + v < len(previous_line):
+                        if previous_line[i + v] in "1234567890":
+                            num = int(day_three_aux(previous_line, i+v))
+                            soma.append(num)
+                            if previous_line[i] != ".":
+                                break
+                for v in vetor:
+                    if i + v >= 0 and i + v < len(line):
+                        if line[i + v] in "1234567890":
+                            num = int(day_three_aux(line, i+v))
+                            soma.append(num)  
+                for v in vetor:
+                    if i + v >= 0 and i + v < len(next_line):
+                        if next_line[i + v] in "1234567890":
+                            num = int(day_three_aux(next_line, i+v))
+                            soma.append(num)
+                            if next_line[i] != ".":
+                                break
+            if len(soma) == 2:
+                soma_mesmo += soma[0] * soma[1]
+            soma = []
+        previous_line = line
+        line = next_line
+        next_line = file.readline()
+    return soma_mesmo
+
+def day_three_aux(line, i):
+    num = line[i]
+    if line[i-1] in "1234567890":
+        num = line[i-1] + num
+        if line[i-2] in "1234567890":
+            num = line[i-2] + num
+            return num
+        if line[i+1] in "1234567890":
+            num = num + line[i+1]
+            return num
+    if line[i+1] in "1234567890":
+        num = num + line[i+1]
+        if line[i+2] in "1234567890":
+            num = num + line[i+2]
+            return num
+    return num
+
+print(day_three())

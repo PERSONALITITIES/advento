@@ -44,5 +44,3 @@ def day_two():
         for key in dicionario.keys():
             dicionario[key] = ZERO
     return sum
-
-print(day_two())
